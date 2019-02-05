@@ -14,6 +14,8 @@
         userInput -> how many Fibonacci numbers the user wants to see
         num1      -> initial 0 for the recursive function
         num2      -> initial 1 for the recursive function
+    bool
+        flag      -> makes sure the initial 0 and/or 1 is only displayed once for the recursion function
  */
 //</editor-fold>
 
@@ -26,6 +28,7 @@ public class Main {
         //<editor-fold desc="Variable Declaration">
         int userInput = 0, num1 = 0, num2 = 1;
         Scanner input = new Scanner(System.in);
+        boolean flag = true;
         //</editor-fold>
 
         // Welcomes the user and asks for the input, then stores it
@@ -41,7 +44,7 @@ public class Main {
 
         // Recursive method
         long startTime = System.nanoTime();      // Starts timer for recursive function
-        fiboSeriesRec(userInput, num1, num2);    // Calls the recursive method
+        fiboSeriesRec(userInput, num1, num2, flag);    // Calls the recursive method
         long endTime = System.nanoTime();        // Stops the timer
         System.out.println("The recursion function took "
                 + (endTime - startTime) + " nano seconds to complete\n");  //Calculates and output the running time
@@ -51,7 +54,7 @@ public class Main {
 
 
 
-    //<editor-fold desc="Notes"
+    //<editor-fold desc="Notes Recursion"
     /*
         ***************ABOUT***************
         This is the recursive method
@@ -66,15 +69,12 @@ public class Main {
             num0      -> 2nd number from the current
             num1      -> 1st number from the current
             finalNum  -> latest number, to be printed
-        bool
-            flag      -> makes sure the initial 0 and/or 1 is only displayed once
     */
     //</editor-fold>
-    public static void fiboSeriesRec(int input, int num0, int num1){
+    public static void fiboSeriesRec(int input, int num0, int num1, boolean flag){
 
         //<editor-fold desc="Variable Declaration"
         int finalNum;
-        boolean flag = true;
         //</editor-fold>
 
         // Print out initial 0 and 1 if input is 2
@@ -96,11 +96,12 @@ public class Main {
 
         //if statement to do recursion if input =! 0
         if(input > 1) {
+            flag = false;
             finalNum = num0 + num1;            // Calculate the latest number
             System.out.println(finalNum);      // Print out final number
             num0 = num1;                       // Move preceding number down by 1
             num1 = finalNum;                   // Move current number to preceding position
-            fiboSeriesRec(input, num0, num1);  // Create recursion with new number set
+            fiboSeriesRec(input, num0, num1, flag);  // Create recursion with new number set
         }
     }
 
